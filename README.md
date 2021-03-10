@@ -1,2 +1,3 @@
-# WebScraping-SEA
-In this repository, scripts to get data from the Servicio de Evaluación Ambiental (SEA) of Chile is presented. SEA's page: https://www.sea.gob.cl/
+# WebScraping SEA
+
+In this repository, scripts to get data from the Servicio de Evaluación Ambiental (SEA) of Chile is presented. [SEA page](https://www.sea.gob.cl/). For this taks, a R script was used. SEA is an institutional service responsible for authorizing environmental permissions of projects in Chile. Overall, all projects reviewed by the SEA, have some potential risk to the environment or the population health. For that reason, this information compiled from this service could be relevant to understand how many projects are installed in the country. At the moment, general information is scraped from the system. IN the future, more specific information can be obtained. 
