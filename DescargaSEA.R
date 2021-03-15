@@ -196,7 +196,7 @@ Tabla_general <- Tabla_general %>% rename('name' = Nombre,
   select(name,type,region,owner,typology,typology_des,investment,entry_date,state,qualification_date,id_project,latitude,longitude,n_docs,n_addendum,n_participatory,description,main_url)
 
 #Imprimir Tabla resultante
-write.csv2(Tabla_general,"Tabla General.csv",row.names = FALSE)
+write.csv2(Tabla_general,"projects.csv",row.names = FALSE)
       
    
 # Referencias
