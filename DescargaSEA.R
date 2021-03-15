@@ -7,6 +7,7 @@ library(stringr) # Hand   le of strings
 library(dplyr) # Handle data and use of pipelines
 library(xlsx) # Read and write excel files
 library(sf) # Read and handle kmz
+library(lubridate) #handle with dates
   
 #Fijar directorio de trabajo
 setwd("/home/vcaquilpan/Documentos/R Scripts/SEA/v2/WebScraping-SEA/Datos")
@@ -195,8 +196,16 @@ Tabla_general <- Tabla_general %>% rename('name' = Nombre,
                          'qualification_date' = Fecha_Calificado) %>% 
   select(name,type,region,owner,typology,typology_des,investment,entry_date,state,qualification_date,id_project,latitude,longitude,n_docs,n_addendum,n_participatory,description,main_url)
 
+#Arreglar columna qualification_date
+vector_mes<- c('ene','feb','mar','abr','may','jun','jul','ago','sep','oct','nov','dic')
+Tabla_general$qualification_date[!is.na(Tabla_general$qualification_date)] <- paste0(str_sub(Tabla_general$qualification_date[!is.na(Tabla_general$qualification_date)] ,start = 1,end = 2),"/",Tabla_general$qualification_date[!is.na(Tabla_general$qualification_date)] %>% str_extract(pattern = '[[:alpha:]]{3}+') %>% match(vector_mes),"/",str_sub(Tabla_general$qualification_date[!is.na(Tabla_general$qualification_date)] ,start = 8, end = 11))
+Tabla_general$qualification_date <- as.Date(Tabla_general$qualification_date)
+
+#Dejar entry date en el mismo formato
+Tabla_general$entry_date <- as.Date(Tabla_general$entry_date)
+
 #Imprimir Tabla resultante
-write.csv2(Tabla_general,"projects.csv",row.names = FALSE)
+write_csv(Tabla_general,"projects.csv")
       
    
 # Referencias
