@@ -12,7 +12,7 @@ library(lubridate) #handle with dates
 #Fijar directorio de trabajo
 setwd("/home/vcaquilpan/Documentos/R Scripts/SEA/v2/WebScraping-SEA/Datos")
 
-#1) Descarga informacion general.
+  #1) Descarga informacion general.
 
 #Extraer url principal de la seccion "Busqueda" (Ejemplo: https://seia.sea.gob.cl/busqueda/buscarProyectoAction.php?_paginador_refresh=0&_paginador_fila_actual=1)
 url_principal <- "https://seia.sea.gob.cl/busqueda/buscarProyectoAction.php?_paginador_refresh=0&_paginador_fila_actual="
@@ -199,15 +199,15 @@ Tabla_general <- Tabla_general %>% rename('name' = Nombre,
 #Arreglar columna qualification_date
 vector_mes<- c('ene','feb','mar','abr','may','jun','jul','ago','sep','oct','nov','dic')
 Tabla_general$qualification_date[!is.na(Tabla_general$qualification_date)] <- paste0(str_sub(Tabla_general$qualification_date[!is.na(Tabla_general$qualification_date)] ,start = 1,end = 2),"/",Tabla_general$qualification_date[!is.na(Tabla_general$qualification_date)] %>% str_extract(pattern = '[[:alpha:]]{3}+') %>% match(vector_mes),"/",str_sub(Tabla_general$qualification_date[!is.na(Tabla_general$qualification_date)] ,start = 8, end = 11))
-Tabla_general$qualification_date <- as.Date(Tabla_general$qualification_date)
+Tabla_general$qualification_date[Tabla_general$qualification_date == "ch/NA/er(0"] <- ""
 
-#Dejar entry date en el mismo formato
-Tabla_general$entry_date <- as.Date(Tabla_general$entry_date)
+#Transformar fechas al mismo formato
+Tabla_general$entry_date <- as.Date(Tabla_general$entry_date,format = "%d/%m/%Y")
+Tabla_general$qualification_date <-  as.Date(Tabla_general$qualification_date,format = "%d/%m/%Y")
 
 #Imprimir Tabla resultante
 write_csv(Tabla_general,"projects.csv")
       
-   
 # Referencias
 # https://rtask.thinkr.fr/installation-of-r-4-0-on-ubuntu-20-04-lts-and-tips-for-spatial-packages/
 # https://www.datacamp.com/community/tutorials/r-web-scraping-rvest?utm_source=adwords_ppc&utm_campaignid=1455363063&utm_adgroupid=65083631748&utm_device=c&utm_keyword=&utm_matchtype=b&utm_network=g&utm_adpostion=&utm_creative=332602034364&utm_targetid=aud-517318241987:dsa-429603003980&utm_loc_interest_ms=&utm_loc_physical_ms=9047105&gclid=EAIaIQobChMIs56vj9Km7wIVjIKRCh1JrwLcEAAYASAAEgLVqvD_BwE
